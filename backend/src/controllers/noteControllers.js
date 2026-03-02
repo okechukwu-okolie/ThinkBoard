@@ -13,7 +13,7 @@ export const getAll = async (req, res) => {
 export const postAll = async (req, res) => {
   try {
     //destructure title and content from the body
-    const { title, content } = req.body;
+    const { title, content } = req.body;  
 
     //create an instance of the schema and place it in newNote,
     //  filing the key of title and content with title and content 
