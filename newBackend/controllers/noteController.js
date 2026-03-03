@@ -4,10 +4,8 @@ import NewNotes from "../models/notes.js";
 export const getAllNotes = async (req, res) => {
   try {
     const allNotes = await NewNotes.find().sort({ createdAt: -1 }); //this lists the items from last in first
-    if (allNotes.length === 0)
-      return res.json({ message: "There is no note to retrieve" });
-    res.json(allNotes);
-    res.status(200).json({ message: "data retrieved successfully" });
+    if (allNotes.length === 0)return res.status(404).json({ message: "There is no note to retrieve" });
+    res.status(200).json(allNotes);
   } catch (error) {
     console.error("there was an error getting all the notes", error);
   }
@@ -17,7 +15,7 @@ export const getOneNote = async (req, res) => {
   try {
     const getSingleNote = await NewNotes.findById(req.params.id);
     if (!getSingleNote)
-      return res.status(404).json({ message: "note does not exist" });
+    return res.status(404).json({ message: "note does not exist" });
     res.json(getSingleNote);
   } catch (error) {
     console.error("there was an error getting all the notes", error);
@@ -58,13 +56,15 @@ export const editNewNote = async (req, res) => {
     const editedNote = await NewNotes.findByIdAndUpdate(req.params.id, {
       title,
       content,
-    });
+    },{new:true});
     if (!editedNote) return res.status(404).json({ message: "Note not found" });
     res.status(200).json({ message: "content updated sucessfully" });
   } catch (error) {
     console.error("error posting the new note", error);
   }
 };
+
+
 
 export const deleteNewNote = async (req, res) => {
   try {

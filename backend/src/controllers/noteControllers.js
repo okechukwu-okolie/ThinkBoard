@@ -3,6 +3,7 @@ import Note from "../../models/Note.js";
 export const getAll = async (req, res) => {
   try {
     const Notes = await Note.find(); 
+    console.log(Notes)
     res.status(200).json({ message: "all notes delivered" });
   } catch (error) {
     console.error("Error in the getAll controller", error);
@@ -30,7 +31,7 @@ export const postAll = async (req, res) => {
     // from the body
     const newNote =  new Note({title, content})
 
-
+    console.log(newNote)
     //the instance is updated with the new information
     await newNote.save()
 

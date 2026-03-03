@@ -14,6 +14,11 @@ const app = express()
 app.use(express.json())//always put the express.json before the routes 
 app.use(rateLimiter)
 
+app.use((req,res,next)=>{
+    console.log('Request received at', new Date().toLocaleString())
+    
+    next()
+})
 
 app.use('/api/notes',pathway)
 
