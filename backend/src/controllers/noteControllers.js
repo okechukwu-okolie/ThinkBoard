@@ -10,6 +10,16 @@ export const getAll = async (req, res) => {
   }
 };
 
+export const getOneNote = async(req,res)=>{
+    try{
+    const getSingleNote = await NewNotes.findById(req.param.id)
+    if(!getSingleNote) return res.status(404).json({message:'note does not exist'})
+        res.json(getSingleNote)
+    }catch(error){
+        console.error('there was an error getting all the notes',error)
+    }
+}
+
 export const postAll = async (req, res) => {
   try {
     //destructure title and content from the body
@@ -31,10 +41,14 @@ export const postAll = async (req, res) => {
   }
 };
 
-export const putAll = (req, res) => {
-  res.status(200).json({
-    message: "The post has been successfully updated",
-  });
+export const putAll =async (req, res) => {
+  try{
+    const {title,content} = req.body
+    const editedNotes = await Note.findByIdAndUpdate(req.params.id,{title,content})
+    if(!editedNotes) return res.status(404).json({message:'There is no data for deleting.'})
+  }catch(error){
+
+  }
 };
 
 export const deleteAll = (req, res) => {

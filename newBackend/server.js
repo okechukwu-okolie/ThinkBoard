@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 import { database } from './config/db.js'
 import pathway from './routes/pathway.js'
+import rateLimiter from './middleware/rateLimiter.js'
 
 const app = express()
 
@@ -10,7 +11,10 @@ const app = express()
 
 
 //middleware
-app.use(express.json())
+app.use(express.json())//always put the express.json before the routes 
+app.use(rateLimiter)
+
+
 app.use('/api/notes',pathway)
 
 database(process.env.mongo_key)
