@@ -2,7 +2,7 @@ import React from 'react'
 
 const CreatePage = () => {
   return (
-    <div>
+    <div >
       this is the create page
     </div>
   )

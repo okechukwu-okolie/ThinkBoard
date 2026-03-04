@@ -4,7 +4,8 @@ export const getAll = async (req, res) => {
   try {
     const Notes = await Note.find(); 
     console.log(Notes)
-    res.status(200).json({ message: "all notes delivered" });
+    res.status(200).json(Notes);
+    // res.status(200).json({ message: "all notes delivered" });
   } catch (error) {
     console.error("Error in the getAll controller", error);
     res.status(500).json({ message: "internal server error" });

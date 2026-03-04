@@ -1,9 +1,17 @@
 import express from "express";
+import dotenv from "dotenv";
+import cors from "cors";
+
+
+
 import notesRoutes from "./src/routes/notesRoutes.js";
 import { connectDB } from "./config/db.js";
-import dotenv from "dotenv";
 import rateLimiter from "./middleware/rateLimiter.js";
+
+
 dotenv.config();
+
+
 
 const port = process.env.PORT || 5001;
 const app = express();
@@ -18,7 +26,11 @@ app.use(express.json());
 // })
 
 //this is the rate limiting middleware
+app.use(cors());
 app.use(rateLimiter);
+
+
+
 
 app.use("/api/notes", notesRoutes);
 
