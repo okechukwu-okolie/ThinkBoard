@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router'
 import {Moon, PlusIcon, Sun} from 'lucide-react'
 const NavBar = ({themeFunction,control}) => {
-    const [edited, setEdited] = useState(false)
-    const [deleted, setDeleted] = useState(false)
+    // const [edited, setEdited] = useState(false)
+    // const [deleted, setDeleted] = useState(false)
   return (
     <header  className='bg-base-300 border-b border-base-content/10'>
         <div className='mx-auto max-w-6xl p-4'>

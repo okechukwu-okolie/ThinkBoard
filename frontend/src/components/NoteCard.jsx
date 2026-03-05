@@ -1,9 +1,15 @@
+import axios from 'axios'
 import { PenSquareIcon, Trash2Icon } from 'lucide-react'
 import React from 'react'
 import { Link } from 'react-router'
 
 
-const NoteCard = ({note}) => {
+const NoteCard = ({note, setNotes}) => {
+
+    const deleteNote =async (id)=>{
+        await axios.delete(`http://localhost:5005/api/notes/${id}`)
+        setNotes(prevNotes => prevNotes.filter(n => n._id !== id))
+    }
   return (
     <Link to={`/notes/${note._id}`}
     className='card bg-base-100 hover:shadow-lg transition-all duration-200 border-4 border-opacity-[0.1] border-[#00FF9D'>
@@ -22,7 +28,7 @@ const NoteCard = ({note}) => {
                 <div className='flex items-center gap-1'>
                     <PenSquareIcon className='size-4'/>
                     <button className='btn btn-ghost btn-xs text-error'>
-                        <Trash2Icon className='size-4'/>
+                        <Trash2Icon className='size-4' onClick={()=>deleteNote(note._id)}/>
                     </button>
                 </div>
             </div>
