@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router'
+import { Link, Navigate } from 'react-router'
 import { ArrowLeftIcon } from 'lucide-react'
 import toast from 'react-hot-toast'
-import axios from 'axios'
+import axiosInstance from '../components/libs/axios'
 const CreatePage = () => {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
@@ -19,14 +19,22 @@ const CreatePage = () => {
   setLoading(true)
   const createNote = async () => {
     try {
-      const res = await axios.post('http://localhost:5005/api/notes', { title, content })
-      const data = await res.data
+      await axiosInstance.post('/notes', { title, content })
+      
       toast.success('Note created successfully')
       setTitle('')
-      setContent('')
+      setContent('') 
+      Navigate('/') // Redirect to the home page after successful creation
     } catch (error) {
-      toast.error('Failed to create note')
       console.log('Post unsuccessfull',error)
+      if (error.response.status === 429) {
+        toast.error('Failed to create note. Please try again.',{
+        duration: 4000,
+        icon: "💀"
+      })
+      }else{
+        toast.error('An error occurred while creating the note. Please try again.')
+      }
     } finally {
       setLoading(false)
     }

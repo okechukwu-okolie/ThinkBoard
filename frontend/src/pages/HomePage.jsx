@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from 'react'
+import { Loader } from 'lucide-react'
+import axiosInstance from '../components/libs/axios.js'
+import toast from 'react-hot-toast'
+
+
+
+
 import NavBar from '../components/NavBar.jsx'
 import RateLimitingUI from '../components/RateLimitingUI.jsx'
-import axios from 'axios'
-import toast from 'react-hot-toast'
 import NoteCard from '../components/NoteCard.jsx'
-import { Loader } from 'lucide-react'
+import NotesNotFound from '../pages/NotesNotFound.jsx'
+
+
 
 const HomePage = ({ theme, control }) => {
   const [isRateLimited, setIsRateLimited] = useState(false)
@@ -53,7 +60,7 @@ const HomePage = ({ theme, control }) => {
 useEffect(()=>{
 const getNotes = async()=>{
   try{
-    const res = await axios.get('http://localhost:5005/api/notes')
+    const res = await axiosInstance.get('/notes')
     const data = await res.data
     setNotes(data)
   }catch(err){
@@ -79,6 +86,8 @@ getNotes()
       <div className='max-w-7xl mx-auto p-4 mt-6'>
          {loading && <div className='flex flex-col justify-center items-center h-[100vh] text-primary py-10 gap-4 '>
           <Loader className='animate-spin ' size={48} /><p>Loading notes...</p></div>}
+
+          {notes.length === 0 && !loading && !isRateLimited && <NotesNotFound/>}
 
 
          {notes.length > 0 && !isRateLimited &&(

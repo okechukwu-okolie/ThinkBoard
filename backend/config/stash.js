@@ -8,7 +8,7 @@ dotenv.config();
 //create rate limit that allows 10 requests per minute per IP address
 const ratelimit = new Ratelimit({
   redis: Redis.fromEnv(),
-  limiter: Ratelimit.slidingWindow(10, '1 m'),
+  limiter: Ratelimit.slidingWindow(30, '1 m'),
 });
 
 export default ratelimit;

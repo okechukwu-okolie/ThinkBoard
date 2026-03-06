@@ -1,14 +1,27 @@
-import axios from 'axios'
 import { PenSquareIcon, Trash2Icon } from 'lucide-react'
 import React from 'react'
 import { Link } from 'react-router'
+import axiosInstance from './libs/axios'
+import toast from 'react-hot-toast'
 
 
 const NoteCard = ({note, setNotes}) => {
 
-    const deleteNote =async (id)=>{
-        await axios.delete(`http://localhost:5005/api/notes/${id}`)
-        setNotes(prevNotes => prevNotes.filter(n => n._id !== id))
+    const deleteNote =async (e,id)=>{
+        e.preventDefault()
+        e.stopPropagation();
+        // if(!window.confirm('Are you sure you want to delete this note?'))return 
+        // 
+        //this line of code is for confirmation before deleting a note, but it can be annoying for users, so I have commented it out. You can uncomment it if you want to use it.
+        try {
+            
+            await axiosInstance.delete(`/notes/${id}`)
+            setNotes((prevNotes) => prevNotes.filter((n) => n._id !== id))// Optimistically update the UI by removing the deleted note from the state
+            toast.success('Note deleted successfully')
+        } catch (error) {
+            console.error('Error deleting note:', error)
+            toast.error('Error deleting note')
+        }
     }
   return (
     <Link to={`/notes/${note._id}`}
@@ -27,8 +40,8 @@ const NoteCard = ({note, setNotes}) => {
                 </span>
                 <div className='flex items-center gap-1'>
                     <PenSquareIcon className='size-4'/>
-                    <button className='btn btn-ghost btn-xs text-error'>
-                        <Trash2Icon className='size-4' onClick={()=>deleteNote(note._id)}/>
+                    <button className='btn btn-ghost btn-xs text-error' onClick={(e)=>deleteNote(e,note._id)}>
+                        <Trash2Icon className='size-4' />
                     </button>
                 </div>
             </div>

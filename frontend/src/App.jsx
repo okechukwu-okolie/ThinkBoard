@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage.jsx'
 import CreatePage from './pages/CreatePage.jsx'
 import NoteDetailPage from './pages/NoteDetailPage.jsx'
 import PageDoesNotExist from './pages/PageDoesNotExist.jsx'
+import NotesNotFound from './pages/NotesNotFound.jsx'
 
 const App = () => {
   const [theme, setTheme] = useState(true)
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/" element={<HomePage theme ={toggleTheme} control={theme} />} />
         <Route path="/create" element={<CreatePage />} />
         <Route path="/notes/:id" element={<NoteDetailPage />} />
+        <Route path="/note" element={<NotesNotFound />} />
         <Route path="*" element={<PageDoesNotExist />} />
       </Routes>
     </div>
