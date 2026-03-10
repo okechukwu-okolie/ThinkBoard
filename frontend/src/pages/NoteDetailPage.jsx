@@ -39,7 +39,16 @@ const NoteDetailpage = () => {
       </div>
     )
   }
-  const handleDelete = async () => {}
+  const handleDelete = async () => {
+    try {
+      await axiosInstance.delete(`/notes/${id}`)
+      toast.success('Note deleted successfully')
+      navigate('/')
+    } catch (error) {
+      toast.error('Error deleting note')
+      console.error('Error deleting note:', error)
+    }
+  }
  
 
   return (
