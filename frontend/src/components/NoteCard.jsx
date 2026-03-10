@@ -1,11 +1,13 @@
 import { PenSquareIcon, Trash2Icon } from 'lucide-react'
 import React from 'react'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import axiosInstance from './libs/axios'
 import toast from 'react-hot-toast'
 
 
 const NoteCard = ({note, setNotes}) => {
+
+    const navigate = useNavigate()
 
     const deleteNote =async (e,id)=>{
         e.preventDefault()
@@ -23,6 +25,26 @@ const NoteCard = ({note, setNotes}) => {
             toast.error('Error deleting note')
         }
     }
+
+    const editNote = async(e,id)=>{
+        e.preventDefault()
+        e.stopPropagation();
+       
+
+        // For example, if you are using React Router v6:
+        navigate(`/www.google.com`)
+        try {
+            await axiosInstance.put(`/notes/${id}`,{
+                title: note.title,
+                content: note.content
+            })
+            toast.success('Note updated successfully')
+        } catch (error) {
+            console.error('Error updating note:', error)
+            toast.error('Error updating note')
+        }
+        }
+    
   return (
     <Link to={`/notes/${note._id}`}
     className='card bg-base-100 hover:shadow-lg transition-all duration-200 border-4 border-opacity-[0.1] border-[#00FF9D'>
@@ -41,7 +63,7 @@ const NoteCard = ({note, setNotes}) => {
                 <div className='flex items-center gap-1'>
                     <PenSquareIcon className='size-4'/>
                     <button className='btn btn-ghost btn-xs text-error' onClick={(e)=>deleteNote(e,note._id)}>
-                        <Trash2Icon className='size-4' />
+                        <Trash2Icon className='size-4' onClick={(e)=>editNote(e,note._id)}/>
                     </button>
                 </div>
             </div>

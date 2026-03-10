@@ -43,22 +43,39 @@ export const postAll = async (req, res) => {
   }
 };
 
-export const putAll =async (req, res) => {
-  try{
-    const {title,content} = req.body
-    const editedNotes = await Note.findByIdAndUpdate(req.params.id,{title,content})
-    if(!editedNotes) return res.status(404).json({message:'There is no data for deleting.'})
-  }catch(error){
 
-  }
-};
+export const putAll =async(req,res)=>{
+    const{title,content}=req.body
+    if(!title || !content) return res.status(404).json({message:'404 error detected'})
+    try{
+        await Note.findByIdAndUpdate(
+        req.param.id,
+        {title,content},
+        {new:true}
+    )
+    res.status(200).json({
+        message:'updated successfully'
+    })
+    }catch(err){
+        res.status(500).json({
+            message:'error editing the note'
+        })
+    }
+}
 
-export const deleteAll = (req, res) => {
-  res.status(200).json({
-    message: "The message has been deleted.",
-  });
-};
+export const deleteAll =async(req,res)=>{
+   
 
-//highlight the followng titles if there are in the list: The Phantom of the Opera, Chicago, Starlight Express, Chitty Chitty Bang Bang, The Lion in Winter, Follies, Cats
-//excluding the following:The Phantom of the Opera, Chicago, Starlight Express, Chitty Chitty Bang Bang, The Lion in Winter, Follies, Cats
-//musicals and shows excluding those in the list provided in this query
+   try{
+    const deleteOne = await Note.findByIdAndDelete(req.params.id)
+    if(!deleteOne)return res.status(400).json({message:'user input wrong ID'})
+
+    res.status(200).json({
+        message:'data successfully deleted'
+    })
+   }catch(err){
+    res.status(500).json({
+        message:'server based error'
+    })
+   }
+}
