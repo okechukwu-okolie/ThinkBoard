@@ -16,13 +16,14 @@ const App = () => {
     <div data-theme={theme ? 'coffee' : 'light'} className='relative h-full w-full'>
        <div className='absolute inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_60%,#00FF9D40_100%)'></div>
       <Routes>
-        <Route path="/" element={<HomePage theme ={toggleTheme} control={theme} />} />
+        <Route path="/" element={<HomePage theme ={toggleTheme} control={theme}  />} />
         <Route path="/create" element={<CreatePage />} />
-        <Route path="/notes/:id" element={<NoteDetailPage />} />
+        <Route path="/notes/:id" element={<NoteDetailPage  />} />
         <Route path="/note" element={<NotesNotFound />} />
         <Route path="*" element={<PageDoesNotExist />} />
       </Routes>
-    </div>
+      
+    </div> 
   )
 }
 

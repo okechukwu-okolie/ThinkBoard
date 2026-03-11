@@ -13,10 +13,12 @@ import NotesNotFound from '../pages/NotesNotFound.jsx'
 
 
 
-const HomePage = ({ theme, control }) => {
+const HomePage = ({ theme, control, id }) => {
   const [isRateLimited, setIsRateLimited] = useState(false)
   const [notes, setNotes] = useState([])
   const [loading, setLoading] = useState(true)
+  //usestate for search term, currently not in use, but can be used in future for searching notes by title or content
+  // const [searchTerm, setSearchTerm] = useState('')
 
 // useEffect(() => {
 //   const fetchNotes = async () => {
@@ -56,6 +58,9 @@ const HomePage = ({ theme, control }) => {
 //   }
 //   fetchNotes()
 // },[])
+//15 lists of fruits
+
+
 
 useEffect(()=>{
 const getNotes = async()=>{
@@ -79,6 +84,12 @@ const getNotes = async()=>{
 getNotes()
 },[])
 
+
+
+//array of fruits for search functionality, currently not in use, but can be used in future for searching notes by title or content
+
+// const fruits = ['Apple', 'Banana', 'Orange', 'Grapes', 'Mango', 'Pineapple', 'Strawberry', 'Blueberry', 'Watermelon', 'Peach', 'Cherry', 'Pear', 'Kiwi', 'Papaya', 'Plum','Avocado','Blackberry','Cantaloupe','Coconut','Cranberry','Fig','Guava','Lemon','Lime','Lychee','Mandarin','Nectarine','Passion Fruit','Persimmon','Pomegranate','Raspberry','Starfruit','Tangerine','Tomato','Ugli Fruit','Yuzu']
+
   return (
     <div className='min-h-screen'>
       <NavBar themeFunction = {theme} control = {control} />
@@ -94,12 +105,23 @@ getNotes()
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
              {
               notes.map(note => (
-                <NoteCard key={note._id} note={note} setNotes = {setNotes} />
+                <NoteCard key={note._id} note={note} setNotes = {setNotes} id = {id} />
               ))
              }
+            
           </div>
          )}
       </div>
+
+      {/* //filter for search functionality, currently not in use, but can be used in future for searching notes by title or content */}
+
+       {/* <input type="text" placeholder="Search fruits..." onChange={(e) => setSearchTerm(e.target.value)}/>
+       {
+       searchTerm &&
+        fruits.filter(fruit => fruit.toLowerCase().includes(searchTerm.toLowerCase())).map((fruit, index) => (
+          <p key={index}>{fruit} </p>
+        ))
+       } */}
     </div>
   )
 }

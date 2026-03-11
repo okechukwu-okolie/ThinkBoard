@@ -4,7 +4,7 @@ const router = express.Router()
 
 //because the app.use() already has the common routes, we wont use it here
 router.get('/',getAll)
-router.get(':id',getOneNote)
+router.get('/:id',getOneNote)
 
 router.post('/',postAll)
 
