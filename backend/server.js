@@ -16,7 +16,7 @@ dotenv.config();
 
 const port = process.env.PORT || 5001;
 const app = express();
-const __dirname = 
+const __dirname = path.resolve()
 
 //the database should be defined before the routes because the routes will have to source from the database
 
@@ -52,7 +52,7 @@ if(process.env.NODE_ENV === 'production'){
 
   app.use(express.static(path.join(__dirname,'../frontend/dist')))
 
-  app.get('*',(req,res)=>{
+  app.get('*all',(req,res)=>{
     res.sendFile(path.join(__dirname,'../frontend','dist','index.html'))
   })
 }
